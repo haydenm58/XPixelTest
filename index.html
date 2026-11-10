@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Pixel Test Store</title>
+    <!-- Tailwind CSS for clean, professional styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 1. PASTE YOUR GOOGLE TAG MANAGER CONTAINER SNIPPET HERE -->
+    <!-- Example:
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    -->
+    <script>
+        // Mock dataLayer for testing before GTM is connected
+        window.dataLayer = window.dataLayer || [];
+        console.log("GTM dataLayer initialized.");
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header / Nav -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-900">🛍️ Apex Gear (Pixel Test Store)</h1>
+            <div class="flex items-center space-x-4">
+                <span id="cart-count" class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full">0 items</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero & Products -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow">
+        <div class="mb-8 bg-blue-600 text-white p-6 rounded-xl shadow-md">
+            <h2 class="text-2xl font-bold mb-2">X Pixel & GTM Sandbox</h2>
+            <p class="text-blue-100">Use this live store to test base pageviews, Add to Cart events, and simulated checkouts. Open your browser console or X Pixel Helper extension to inspect events.</p>
+        </div>
+
+        <h3 class="text-xl font-semibold mb-6 text-gray-900">Featured Products</h3>
+        
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Product 1 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-4xl">🎒</div>
+                    <h4 class="font-bold text-lg text-gray-900">Nomad Tech Backpack</h4>
+                    <p class="text-gray-500 text-sm mt-1">Weatherproof daily carry with dedicated laptop compartment.</p>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <span class="text-lg font-bold text-gray-900">$89.00</span>
+                    <button onclick="addToCart('Nomad Tech Backpack', 89.00, 'SKU-BACKPACK-01')" class="bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-4xl">🎧</div>
+                    <h4 class="font-bold text-lg text-gray-900">Aura Pro Wireless Headphones</h4>
+                    <p class="text-gray-500 text-sm mt-1">Active noise cancellation with 40-hour battery life.</p>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <span class="text-lg font-bold text-gray-900">$149.00</span>
+                    <button onclick="addToCart('Aura Pro Wireless Headphones', 149.00, 'SKU-HEADPHONES-02')" class="bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-40 bg-gray-100 rounded-lg mb-4 flex items-center justify-center text-4xl">⌨️</div>
+                    <h4 class="font-bold text-lg text-gray-900">Mechanical Apex Keyboard</h4>
+                    <p class="text-gray-500 text-sm mt-1">Hot-swappable wireless RGB mechanical keyboard.</p>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <span class="text-lg font-bold text-gray-900">$119.00</span>
+                    <button onclick="addToCart('Mechanical Apex Keyboard', 119.00, 'SKU-KEYBOARD-03')" class="bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart / Checkout Section -->
+        <div class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h3 class="text-lg font-bold mb-4">Your Shopping Cart</h3>
+            <div id="cart-items" class="text-gray-500 text-sm mb-4">Your cart is currently empty.</div>
+            <div class="flex justify-between items-center border-t pt-4">
+                <span class="font-bold text-gray-900">Total: $<span id="cart-total">0.00</span></span>
+                <button onclick="simulateCheckout()" id="checkout-btn" class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-6 py-2.5 rounded-lg transition-colors opacity-50 cursor-not-allowed" disabled>
+                    Simulate Purchase
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12 py-6 text-center text-xs text-gray-400">
+        <p>X Pixel Testing Environment — Configured for GTM dataLayer integration.</p>
+    </footer>
+
+    <!-- JavaScript simulating store logic & GTM dataLayer pushes -->
+    <script>
+        let cart = [];
+
+        function addToCart(name, price, sku) {
+            cart.push({ name, price, sku });
+            updateCartUI();
+
+            // Push AddToCart event to GTM dataLayer
+            window.dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: {
+                    currency: 'USD',
+                    value: price,
+                    items: [{ item_id: sku, item_name: name, price: price }]
+                }
+            });
+            console.log("dataLayer event pushed: add_to_cart", { name, price });
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cart-count');
+            const itemsEl = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            countEl.innerText = `${cart.length} item${cart.length === 1 ? '' : 's'}`;
+
+            if (cart.length === 0) {
+                itemsEl.innerHTML = 'Your cart is currently empty.';
+                totalEl.innerText = '0.00';
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                let total = cart.reduce((sum, item) => sum + item.price, 0);
+                itemsEl.innerHTML = cart.map(i => `<div class="py-1 flex justify-between"><span>${i.name}</span><span>$${i.price.toFixed(2)}</span></div>`).join('');
+                totalEl.innerText = total.toFixed(2);
+                checkoutBtn.disabled = false;
+                checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function simulateCheckout() {
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            
+            // Push Purchase event to GTM dataLayer
+            window.dataLayer.push({
+                event: 'purchase',
+                ecommerce: {
+                    transaction_id: 'TXN-' + Math.floor(Math.random() * 1000000),
+                    value: total,
+                    currency: 'USD',
+                    items: [...cart]
+                }
+            });
+
+            alert(`Purchase successful! Total: $${total.toFixed(2)}. Check your GTM Preview or X Pixel Helper.`);
+            console.log("dataLayer event pushed: purchase", { total, cart });
+            
+            cart = [];
+            updateCartUI();
+        }
+    </script>
+</body>
+</html>
